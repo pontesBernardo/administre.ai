@@ -25,84 +25,111 @@ const chats: Chat[] = [
 ];
 
 export function ChatSidebar() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeChatId, setActiveChatId] = useState<string | null>(
     chats[0]?.id ?? null
   );
 
   return (
-    <aside className="w-64 h-full bg-card flex flex-col space-y-6 p-4">
-      <div className="w-full flex justify-between">
-        <HugeiconsIcon
-          icon={ChatGptIcon}
-          size={25}
-          className="cursor-pointer"
-        />
+    <aside
+      className={`h-full bg-card flex flex-col space-y-6 p-4 transition-all duration-300
+    ${isCollapsed ? "w-20" : "w-64"}
+  `}
+    >
+      <div
+        className={`w-full flex items-center ${
+          isCollapsed ? "justify-center" : "justify-between"
+        }`}
+      >
+        {!isCollapsed && (
+          <HugeiconsIcon
+            icon={ChatGptIcon}
+            size={25}
+            className="cursor-pointer"
+          />
+        )}
+
         <HugeiconsIcon
           icon={Sidebar}
           size={20}
           className="cursor-pointer text-muted-foreground"
+          onClick={() => setIsCollapsed((prev) => !prev)}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <Button variant="ghost" size="lg" className="justify-start">
+        <Button
+          variant="ghost"
+          size={isCollapsed ? "icon-lg" : "lg"}
+          className={`gap-3 ${isCollapsed ? "mx-auto" : "justify-start"}`}
+        >
           <HugeiconsIcon icon={PencilEdit02Icon} size={25} />
-          New Chat
+          {!isCollapsed && "New Chat"}
         </Button>
 
-        <Button variant="ghost" size="lg" className="justify-start">
+        <Button
+          variant="ghost"
+          size={isCollapsed ? "icon-lg" : "lg"}
+          className={`gap-3 ${isCollapsed ? "mx-auto" : "justify-start"}`}
+        >
           <HugeiconsIcon icon={AbacusIcon} size={25} />
-          Integrations
+          {!isCollapsed && "Integrations"}
         </Button>
       </div>
 
-      <div className="flex flex-col gap-1 flex-1 min-h-0">
-        <p className="text-sm text-muted-foreground">Your chats</p>
+      {!isCollapsed && (
+        <div className="flex flex-col gap-1 flex-1 min-h-0">
+          <p className="text-sm text-muted-foreground">Your chats</p>
 
-        <ScrollArea className="mt-2 pr-4 h-[calc(110%-64px)]">
-          <div className="flex flex-col gap-1 pb-20">
-            {chats.map((chat) => {
-              const isActive = activeChatId === chat.id;
+          <ScrollArea className="mt-2 pr-4 flex-1">
+            <div className="flex flex-col gap-1 pb-20">
+              {chats.map((chat) => {
+                const isActive = activeChatId === chat.id;
 
-              return (
-                <Button
-                  key={chat.id}
-                  variant="ghost"
-                  size="lg"
-                  onClick={() => setActiveChatId(chat.id)}
-                  className={`group font-normal justify-between relative
-            ${isActive ? "bg-neutral-800" : ""}
-          `}
-                >
-                  <span className="truncate">{chat.title}</span>
+                return (
+                  <Button
+                    key={chat.id}
+                    variant="ghost"
+                    size="lg"
+                    onClick={() => setActiveChatId(chat.id)}
+                    className={`group font-normal justify-between relative
+                ${isActive ? "bg-neutral-800" : ""}
+              `}
+                  >
+                    <span className="truncate">{chat.title}</span>
 
-                  <HugeiconsIcon
-                    icon={MoreVerticalIcon}
-                    size={18}
-                    className="absolute right-3 opacity-0 group-hover:opacity-100 text-muted-foreground"
-                  />
-                </Button>
-              );
-            })}
-          </div>
-        </ScrollArea>
-      </div>
+                    <HugeiconsIcon
+                      icon={MoreVerticalIcon}
+                      size={18}
+                      className="absolute right-3 opacity-0 group-hover:opacity-100 text-muted-foreground"
+                    />
+                  </Button>
+                );
+              })}
+            </div>
+          </ScrollArea>
+        </div>
+      )}
 
       <footer className="mt-auto w-full bg-card border-t py-2">
         <Button
           variant="ghost"
           size="lg"
-          className="w-full justify-start gap-4 h-12"
+          className={`w-full gap-4 h-12 transition-all
+    ${isCollapsed ? "justify-center" : "justify-start px-3"}
+  `}
         >
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
-          <div className="flex flex-col items-start justify-start">
-            <h1 className="font-normal text-sm">Shadd</h1>
-            <p className="font-light text-xs">Freemium</p>
-          </div>
+          {!isCollapsed && (
+            <div className="flex flex-col items-start justify-start">
+              <h1 className="font-normal text-sm">Shadd</h1>
+              <p className="font-light text-xs">Freemium</p>
+            </div>
+          )}
         </Button>
       </footer>
     </aside>
