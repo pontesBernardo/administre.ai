@@ -1,12 +1,5 @@
-import { Button } from "./components/ui/button";
+import { AppRoutes } from "./routes/app-router";
 
 export function App() {
-  return (
-    <>
-      <h1>Hello, World!</h1>
-      <Button variant="destructive" size="sm">
-        Teste
-      </Button>
-    </>
-  );
+  return <AppRoutes />;
 }
