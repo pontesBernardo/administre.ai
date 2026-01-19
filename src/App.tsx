@@ -1,9 +1,12 @@
+import { Button } from "./components/ui/button";
+
 export function App() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="font-medium">Hello World</div>
-    </div>
-  )
+    <>
+      <h1>Hello, World!</h1>
+      <Button variant="destructive" size="sm">
+        Teste
+      </Button>
+    </>
+  );
 }
-
-export default App
