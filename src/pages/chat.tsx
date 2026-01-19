@@ -1,5 +1,7 @@
 export function ChatPage() {
-    return (
-        <h1>ChatPage</h1>
-    )
+  return (
+    <main className="w-screen h-screen flex justify-between bg-muted">
+      
+    </main>
+  );
 }
