@@ -1,13 +1,18 @@
-import { Home } from "@/pages/home";
+import { AuthPage } from "@/pages/auth";
+import { ChatPage } from "@/pages/chat";
+import { PlansPage } from "@/pages/plans";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/plans" element={<PlansPage />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/login" element={<AuthPage />} />
+
+        <Route path="*" element={<Navigate to="/chat" replace />} />
       </Routes>
     </BrowserRouter>
   );
