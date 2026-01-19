@@ -5,11 +5,30 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   AbacusIcon,
   ChatGptIcon,
+  MoreVerticalIcon,
   PencilEdit02Icon,
   Sidebar,
 } from "@hugeicons/core-free-icons";
+import { useState } from "react";
+
+type Chat = {
+  id: string;
+  title: string;
+};
+
+const chats: Chat[] = [
+  { id: "chat-1", title: "Como calcular holerite?" },
+  { id: "chat-2", title: "Crie uma planilha financeira" },
+  { id: "chat-3", title: "Relatório completo anual" },
+  { id: "chat-4", title: "Histórico de compras" },
+  { id: "chat-5", title: "Planejamento tributário" },
+];
 
 export function ChatSidebar() {
+  const [activeChatId, setActiveChatId] = useState<string | null>(
+    chats[0]?.id ?? null
+  );
+
   return (
     <aside className="w-64 h-full bg-card flex flex-col space-y-6 p-4">
       <div className="w-full flex justify-between">
@@ -42,85 +61,29 @@ export function ChatSidebar() {
 
         <ScrollArea className="mt-2 pr-4 h-[calc(110%-64px)]">
           <div className="flex flex-col gap-1 pb-20">
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal bg-neutral-800 justify-between"
-            >
-              Como calcular holerite?
-            </Button>
+            {chats.map((chat) => {
+              const isActive = activeChatId === chat.id;
 
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Crie uma planilha financeira
-            </Button>
+              return (
+                <Button
+                  key={chat.id}
+                  variant="ghost"
+                  size="lg"
+                  onClick={() => setActiveChatId(chat.id)}
+                  className={`group font-normal justify-between relative
+            ${isActive ? "bg-neutral-800" : ""}
+          `}
+                >
+                  <span className="truncate">{chat.title}</span>
 
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Relatório completo anual
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Histórico de compras
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Crie uma planilha financeira
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Relatório completo anual
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Histórico de compras
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Crie uma planilha financeira
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Relatório completo anual
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="font-normal justify-between"
-            >
-              Histórico de compras
-            </Button>
+                  <HugeiconsIcon
+                    icon={MoreVerticalIcon}
+                    size={18}
+                    className="absolute right-3 opacity-0 group-hover:opacity-100 text-muted-foreground"
+                  />
+                </Button>
+              );
+            })}
           </div>
         </ScrollArea>
       </div>
