@@ -1,5 +1,5 @@
-import { AppRoutes } from "./routes/app-router";
-
 export function App() {
-  return <AppRoutes />;
+  return (
+    <h1>Hello, World!</h1>
+  )
 }
